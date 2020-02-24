@@ -1,0 +1,28 @@
+---
+- name: Add ondrej repository
+  apt_repository: repo='ppa:ondrej/php' update_cache=yes
+
+- name: Install PHP modules
+  apt:
+    name:
+      - libapache2-mod-php5.6
+      - php5.6-common
+      - php5.6-cli
+      - php5.6-gd
+      - php5.6-curl
+      - php5.6-intl
+      - php5.6-json
+      - php5.6-mbstring
+      - php5.6-mcrypt
+      - php5.6-mysql
+      - php5.6-opcache
+      - php5.6-xml
+    state: present
+
+- name: Adjust OpCache memory settings
+  lineinfile:
+    dest: /etc/php/5.6/apache2/conf.d/10-opcache.ini
+    regexp: '^opcache.memory_consumption'
+    line: 'opcache.memory_consumption = 128'
+    state: present
+  notify: Restart apache

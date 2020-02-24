@@ -1,0 +1,23 @@
+---
+- name: Create ansible user
+  user: 
+    name: '{{ ssh_user }}'
+    groups: sudo
+    append: true
+    create_home: true
+    shell: /bin/bash
+    expires: -1
+
+- name: Deploy ssh Keys
+  authorized_key:
+    user: '{{ ssh_user }}'
+    state: present
+    manage_dir: true
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Configure sudo access for ansible user
+  copy:
+    dest: '/etc/sudoers.d/{{ ssh_user }}'
+    content: '{{ ssh_user }} ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+

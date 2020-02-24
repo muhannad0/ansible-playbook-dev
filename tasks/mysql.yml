@@ -1,0 +1,20 @@
+---
+- name: Install MySQL Server
+  apt:
+    name:
+      - python-mysqldb
+      - mysql-server
+    state: present
+
+- name: Start MySQL Service
+  service: name=mysql state=started enabled=yes
+
+- name: Configure MySQL Admin User
+  mysql_user:
+    name: '{{ mysql_admin_user }}'
+    password: '{{ mysql_admin_pass }}'
+    priv: '*.*:ALL'
+    host: '{{ item }}'
+  loop:
+    - 'localhost'
+    - '127.0.0.1'

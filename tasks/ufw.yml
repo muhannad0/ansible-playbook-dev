@@ -1,0 +1,16 @@
+---
+- name: Configue ufw firewall ssh limited access
+  ufw:
+    rule: limit
+    port: ssh
+
+- name: Enable ufw firewall
+  ufw: state=enabled
+
+- name: Allow ufw firewall ports
+  ufw:
+    rule: allow
+    port: '{{ item }}'
+    proto: tcp
+  loop: '{{ ufw_allow_ports }}'
+

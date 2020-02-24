@@ -1,0 +1,7 @@
+# Ansible
+*.retry
+
+# Specific stuff
+ansible.cfg
+vars.yml
+hosts
