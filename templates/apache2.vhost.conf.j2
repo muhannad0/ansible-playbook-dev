@@ -10,5 +10,5 @@
         </Directory>
 
         ErrorLog ${APACHE_LOG_DIR}/{{ domain_name }}-error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        CustomLog ${APACHE_LOG_DIR}/{{ domain_name}}-access.log combined
 </VirtualHost>
