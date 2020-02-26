@@ -3,6 +3,7 @@
   apt:
     name:
       - python3-pymysql
+      - python-pymysql
       - mysql-server
     state: present
 

@@ -5,6 +5,7 @@
     ansible_user: root
   vars_files:
     - vars.yml
+  tags: stage1
 
   tasks:
     - import_tasks: tasks/users.yml
@@ -13,6 +14,7 @@
   hosts: all
   become: yes
   remote_user: '{{ ssh_user }}'
+  tags: stage2
   vars_files:
     - vars.yml
 

@@ -6,11 +6,3 @@
 
 - name: Enable ufw firewall
   ufw: state=enabled
-
-- name: Allow ufw firewall ports
-  ufw:
-    rule: allow
-    port: '{{ item }}'
-    proto: tcp
-  loop: '{{ ufw_allow_ports }}'
-

@@ -5,6 +5,10 @@
   remote_user: '{{ ssh_user }}' 
   vars_files:
     - vars.yml
+  vars:
+    ufw_allow_ports:
+      - 'http'
+      - 'https'
 
   pre_tasks:
     - name: Update apt cache if required
@@ -29,7 +33,13 @@
     - import_tasks: tasks/apache.yml
       tags: webserver
 
-    - import_tasks: tasks/ufw.yml
+    - name: Allow ufw firewall ports
+      ufw:
+        rule: allow
+        port: '{{ item }}'
+        proto: tcp
+      loop: '{{ ufw_allow_ports }}'
+      tags: ufw
 
     - import_tasks: tasks/php56-tasks.yml
       tags: php

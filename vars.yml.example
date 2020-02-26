@@ -1,7 +1,4 @@
 ---
 ssh_user: 'ansibleuser'
-ufw_allow_ports:
-  - 'http'
-  - 'https'
 
 mysql_root_pass: 'yournewrootpass'
