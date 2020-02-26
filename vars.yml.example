@@ -1,4 +1,4 @@
 ---
 ssh_user: 'ansibleuser'
-
+local_ssh_key: '{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}'
 mysql_root_pass: 'yournewrootpass'

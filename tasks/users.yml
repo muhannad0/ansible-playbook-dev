@@ -13,7 +13,7 @@
     user: '{{ ssh_user }}'
     state: present
     manage_dir: true
-    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    key: '{{ local_ssh_key }}'
 
 - name: Configure sudo access for ansible user
   copy:
