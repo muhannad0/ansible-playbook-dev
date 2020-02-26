@@ -4,12 +4,4 @@ ufw_allow_ports:
   - 'http'
   - 'https'
 
-domain_name: 'domain.local'
-domain_root_path: '/var/www/{{ domain_name }}'
-
-mysql_admin_user: 'user'
-mysql_admin_pass: 'pass'
-
-mysql_app_db: 'db-name'
-mysql_app_user: 'dbuser'
-mysql_app_user_pass: 'dbuserpass'
+mysql_root_pass: 'yournewrootpass'

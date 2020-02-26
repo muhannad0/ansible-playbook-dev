@@ -5,3 +5,7 @@
 ansible.cfg
 vars.yml
 hosts
+/*-prod.yml
+
+# Vi related
+*.swp

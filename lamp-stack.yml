@@ -19,6 +19,7 @@
         name:
           - python-apt
           - python-pycurl
+          - python-pip
           - git
           - curl
           - unzip
@@ -26,9 +27,12 @@
         state: present
 
     - import_tasks: tasks/apache.yml
+      tags: webserver
 
     - import_tasks: tasks/ufw.yml
 
     - import_tasks: tasks/php56-tasks.yml
+      tags: php
 
     - import_tasks: tasks/mysql.yml
+      tags: mysql

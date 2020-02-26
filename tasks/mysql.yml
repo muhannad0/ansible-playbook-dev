@@ -2,19 +2,32 @@
 - name: Install MySQL Server
   apt:
     name:
-      - python-mysqldb
+      - python3-pymysql
       - mysql-server
     state: present
 
 - name: Start MySQL Service
   service: name=mysql state=started enabled=yes
 
-- name: Configure MySQL Admin User
+- name: Set MySQL root pass
   mysql_user:
-    name: '{{ mysql_admin_user }}'
-    password: '{{ mysql_admin_pass }}'
-    priv: '*.*:ALL'
+    name: root
+    password: '{{ mysql_root_pass }}'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    check_implicit_admin: true
+
+- name: Copy MySQL .my.cnf for root
+  template:
+    src: templates/mysql.client.my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: 0600
+
+- name: Remove anonymous users
+  mysql_user:
+    name: ''
     host: '{{ item }}'
+    state: absent
   loop:
     - 'localhost'
-    - '127.0.0.1'
+    - '{{ ansible_hostname }}'

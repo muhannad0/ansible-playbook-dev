@@ -5,7 +5,7 @@
 
         DocumentRoot {{ domain_root_path }}
         <Directory "{{ domain_root_path }}">
-                Options FollowSymLinks Indexes
+                Options +FollowSymLinks -Indexes
                 AllowOverride All
         </Directory>
 

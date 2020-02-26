@@ -1,0 +1,53 @@
+---
+- name: Deploy website
+  hosts: all
+  become: yes
+  remote_user: '{{ ssh_user }}'
+  vars_files:
+    - vars.yml
+
+  vars:
+    domain_name: 'domain.local'
+    domain_root_path: '/var/www/{{ domain_name }}'
+    mysql_app_db: 'db_name'
+    mysql_app_user: 'db_user'
+    mysql_app_user_pass: 'db_pass'
+
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  tasks:
+    - name: Create database
+      mysql_db:
+        db: '{{ mysql_app_db }}'
+        state: present
+      tags: db
+
+    - name: Create user for database
+      mysql_user:
+        name: '{{ mysql_app_user }}'
+        password: '{{ mysql_app_user_pass }}'
+        priv: '{{ mysql_app_db }}.*:ALL'
+        host: localhost
+      tags: db
+
+    - name: Create document root
+      file:
+        path: '{{ domain_root_path }}'
+        state: directory
+        mode: 0755
+
+    - name: Configure vhost
+      template:
+        src: templates/apache2.vhost.conf.j2
+        dest: '/etc/apache2/sites-available/{{ domain_name }}.conf'
+
+    - name: Copy index test page
+      template:
+        src: templates/index.html.j2
+        dest: '{{ domain_root_path }}/index.html'
+
+    - name: Enable site
+      shell: '/usr/sbin/a2ensite {{ domain_name }}.conf'
+      notify: Reload apache
+

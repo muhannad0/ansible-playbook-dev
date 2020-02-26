@@ -2,7 +2,7 @@
 - name: Create ansible user
   user: 
     name: '{{ ssh_user }}'
-    groups: sudo
+    groups: sudo,adm
     append: true
     create_home: true
     shell: /bin/bash
