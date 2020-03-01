@@ -1,0 +1,29 @@
+---
+- name: Docker Stack
+  hosts: all
+  become: yes
+  remote_user: '{{ ssh_user }}'
+  vars_files:
+    - vars.yml
+  
+  vars:
+    - docker_compose_ver: '1.25.4'
+
+  pre_tasks:
+    - name: Update apt cache if required
+      apt: update_cache=yes cache_valid_time=3600
+
+  tasks:
+    - import_tasks: tasks/docker.yml
+      tags: docker
+
+    - name: Check installation
+      shell: 'docker --version'
+      register: docker_ver
+      
+    - name: Check installation
+      shell: 'docker-compose --version'
+      register: docker_comp_ver
+
+    - debug: var=docker_ver.stdout
+    - debug: var=docker_comp_ver.stdout
