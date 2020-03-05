@@ -87,3 +87,5 @@ Note: The plan is to use these playbooks to spin up a containerized app stack.
 Feel free to provide any suggestions/improvements.
 
 ## Acknowledgements
+* [Ansible for DevOps](https://leanpub.com/ansible-for-devops) book by [Jeff Geerling](https://github.com/geerlingguy/)
+* [DigitalOcean Ansible Tutorials](https://www.digitalocean.com/community/tags/ansible)
